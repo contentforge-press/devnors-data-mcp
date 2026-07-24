@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "devnors-mcp"
+dynamic = ["version"]
+description = "Devnors Data - MCP Server: MCP,Model Context Protocol,Claude,Cursor,WorkBuddy,接口,数据API,裁判文书,Legal Case,法律法规,法条,Law Article,企业工商,Company Registry,企业年报,Annual Report,税号开票,Tax Invoice,失信核查,被执行人,关键词指数,微信指数,WeChat Index,热搜榜,微博热搜,抖音热搜,快递查询,Express Tracking,统一查询,/v1/data/query,API Key,AI Agent,LLM"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Devnors" }]
+keywords = [
+  "devnors",
+  "data",
+  "mcp",
+  "model-context-protocol",
+  "legal",
+  "agent",
+  "llm",
+  "claude",
+  "cursor",
+]
+dependencies = ["mcp>=1.0.0", "devnors-data>=0.1.0"]
+
+[project.scripts]
+devnors-mcp = "devnors_mcp.server:main"
+
+[project.urls]
+Homepage = "https://data.devnors.com"
+Documentation = "https://data.devnors.com/docs"
+Repository = "https://github.com/DevnorsAI/devnors-data-mcp"
+Issues = "https://github.com/DevnorsAI/devnors-data-mcp/issues"
+
+[tool.setuptools.dynamic]
+version = { attr = "devnors_mcp.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["devnors_mcp*"]
