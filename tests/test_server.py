@@ -109,6 +109,58 @@ def test_content_hot_rank_injects_platform(monkeypatch):
     assert fake.calls == [("content", "hot_rank", "", 10, {"platform": "douyin"})]
 
 
+def test_research_paper_search_delegates(monkeypatch):
+    fake = _use(monkeypatch, FakeClient())
+    asyncio.run(s.research_paper_search("Attention Is All You Need", top_k=3))
+    assert fake.calls == [
+        ("research", "paper_search", "Attention Is All You Need", 3, None)
+    ]
+
+
+def test_research_patent_search_passes_filters(monkeypatch):
+    fake = _use(monkeypatch, FakeClient())
+    asyncio.run(s.research_patent_search("Si02", filters={"page": 0, "size": 10}))
+    assert fake.calls == [
+        ("research", "patent_search", "Si02", 5, {"page": 0, "size": 10})
+    ]
+
+
+def test_research_journal_search_delegates(monkeypatch):
+    fake = _use(monkeypatch, FakeClient())
+    asyncio.run(s.research_journal_search("tkde"))
+    assert fake.calls == [("research", "journal_search", "tkde", 5, None)]
+
+
+def test_research_paper_detail_delegates(monkeypatch):
+    fake = _use(monkeypatch, FakeClient())
+    asyncio.run(s.research_paper_detail("p1", top_k=1))
+    assert fake.calls == [("research", "paper_detail", "p1", 1, None)]
+
+
+def test_research_patent_detail_passes_filters(monkeypatch):
+    fake = _use(monkeypatch, FakeClient())
+    asyncio.run(s.research_patent_detail("", filters={"id": "pat1"}))
+    assert fake.calls == [("research", "patent_detail", "", 1, {"id": "pat1"})]
+
+
+def test_research_journal_detail_delegates(monkeypatch):
+    fake = _use(monkeypatch, FakeClient())
+    asyncio.run(s.research_journal_detail("v1"))
+    assert fake.calls == [("research", "journal_detail", "v1", 1, None)]
+
+
+def test_research_scholar_search_delegates(monkeypatch):
+    fake = _use(monkeypatch, FakeClient())
+    asyncio.run(s.research_scholar_search("Andrew Ng", top_k=3))
+    assert fake.calls == [("research", "scholar_search", "Andrew Ng", 3, None)]
+
+
+def test_research_scholar_detail_passes_filters(monkeypatch):
+    fake = _use(monkeypatch, FakeClient())
+    asyncio.run(s.research_scholar_detail("", filters={"id": "p1"}))
+    assert fake.calls == [("research", "scholar_detail", "", 1, {"id": "p1"})]
+
+
 def test_tool_error_returns_structured(monkeypatch):
     err = DevnorsDataError("限流", status=429, code="rate_limited",
                            request_id="r2", retryable=True, next_action="退避重试")

@@ -5,7 +5,7 @@
 在 Codex、Claude Desktop、Cursor、WorkBuddy 等 MCP 客户端中使用 Devnors Data。
 
 Devnors Data MCP 可以帮助你的 AI 助手发现可用能力、查看所需参数，并用你的
-API Key 调用法律 / 企业 / 内容 / 快递等接口。
+API Key 调用法律 / 企业 / 内容 / 学术研究 / 快递等接口。
 
 ## 支持的客户端
 
@@ -119,6 +119,14 @@ DEVNORS_DATA_BASE_URL=https://data.devnors.com
 ```
 
 ```text
+按标题搜论文 Attention Is All You Need。
+```
+
+```text
+搜学者 Andrew Ng，并打开第一条详情。
+```
+
+```text
 接口返回 insufficient_balance，接下来该怎么做？
 ```
 
@@ -146,6 +154,15 @@ AI 助手可以先调用 `list_capabilities`，说明必填参数，在你提供
 | `enterprise_shixin_check` | 失信核查 |
 | `enterprise_zhixing_check` | 被执行人核查 |
 | `cloud_express` | 快递物流查询 |
+| `cloud_express_com` | 快递公司编号对照 |
+| `research_paper_search` | 论文搜索 |
+| `research_patent_search` | 专利搜索 |
+| `research_journal_search` | 期刊/会议搜索 |
+| `research_paper_detail` | 论文详情 |
+| `research_patent_detail` | 专利详情 |
+| `research_journal_detail` | 期刊/会议详情 |
+| `research_scholar_search` | 学者搜索 |
+| `research_scholar_detail` | 学者详情 |
 | `data_query` | 统一入口：任意 domain + type |
 
 ## 计费与错误

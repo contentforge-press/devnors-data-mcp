@@ -6,8 +6,8 @@ Use Devnors Data in MCP clients such as Codex, Claude Desktop, Cursor, WorkBuddy
 and other AI assistant tools.
 
 Devnors Data MCP helps your assistant discover available capabilities, inspect
-required parameters, and call legal / enterprise / content / express APIs with
-your Devnors Data API Key.
+required parameters, and call legal / enterprise / content / research / express
+APIs with your Devnors Data API Key.
 
 ## Supported Clients
 
@@ -124,6 +124,14 @@ Track this express parcel with company code and tracking number.
 ```
 
 ```text
+Search academic papers titled Attention Is All You Need.
+```
+
+```text
+Find scholars named Andrew Ng and open the top profile detail.
+```
+
+```text
 The API returned insufficient_balance. What should I do next?
 ```
 
@@ -152,6 +160,15 @@ error codes.
 | `enterprise_shixin_check` | Dishonest judgment debtor check |
 | `enterprise_zhixing_check` | Enforcement debtor check |
 | `cloud_express` | Express tracking |
+| `cloud_express_com` | Express company code table |
+| `research_paper_search` | Academic paper search |
+| `research_patent_search` | Patent search |
+| `research_journal_search` | Journal / conference search |
+| `research_paper_detail` | Paper detail |
+| `research_patent_detail` | Patent detail |
+| `research_journal_detail` | Journal / conference detail |
+| `research_scholar_search` | Scholar search |
+| `research_scholar_detail` | Scholar detail |
 | `data_query` | Unified entry for any domain + type |
 
 ## Billing and Errors

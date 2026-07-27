@@ -307,14 +307,163 @@ async def cloud_express_com(top_k: int = 50) -> dict[str, Any]:
 
 
 @mcp.tool()
+async def research_paper_search(
+    query: str,
+    top_k: int = 5,
+    filters: dict | None = None,
+) -> dict[str, Any]:
+    """论文搜索（按标题检索；也可 filters.title / page / size）。
+
+    - query：论文标题（也可用 filters.title）。
+    - 返回 hits[]：id、title、title_zh、doi、first_author、n_citation_bucket、venue_name、year。
+    - 计费同 data_query。
+    """
+    try:
+        return _fmt(await _client().query(
+            "research", "paper_search", query, top_k=top_k, filters=filters,
+        ))
+    except DevnorsDataError as e:
+        return _err(e)
+
+
+@mcp.tool()
+async def research_patent_search(
+    query: str,
+    top_k: int = 5,
+    filters: dict | None = None,
+) -> dict[str, Any]:
+    """专利搜索（按标题/关键词；也可 filters.page / size，page 从 0 起）。
+
+    - query：专利标题或关键词。
+    - 返回 hits[]：id、title、title_zh、inventor_name、app_year、pub_year。
+    """
+    try:
+        return _fmt(await _client().query(
+            "research", "patent_search", query, top_k=top_k, filters=filters,
+        ))
+    except DevnorsDataError as e:
+        return _err(e)
+
+
+@mcp.tool()
+async def research_journal_search(
+    query: str,
+    top_k: int = 5,
+    filters: dict | None = None,
+) -> dict[str, Any]:
+    """期刊/会议搜索（按名称；也可 filters.name）。
+
+    - query：期刊名（如 tkde）。
+    - 返回 hits[]：id、name_en、name_zh、aliases、venue_type(journal|conference)。
+    """
+    try:
+        return _fmt(await _client().query(
+            "research", "journal_search", query, top_k=top_k, filters=filters,
+        ))
+    except DevnorsDataError as e:
+        return _err(e)
+
+
+@mcp.tool()
+async def research_paper_detail(
+    query: str,
+    top_k: int = 1,
+    filters: dict | None = None,
+) -> dict[str, Any]:
+    """论文详情（query 或 filters.id 为论文 ID，来自 research_paper_search）。
+
+    - 返回 hits[]：id、title、abstract、authors、doi、keywords、venue_name、year 等。
+    """
+    try:
+        return _fmt(await _client().query(
+            "research", "paper_detail", query, top_k=top_k, filters=filters,
+        ))
+    except DevnorsDataError as e:
+        return _err(e)
+
+
+@mcp.tool()
+async def research_patent_detail(
+    query: str,
+    top_k: int = 1,
+    filters: dict | None = None,
+) -> dict[str, Any]:
+    """专利详情（query 或 filters.id 为专利 ID，来自 research_patent_search）。
+
+    - 返回 hits[]：id、title、abstract、app_num、pub_num、inventor、assignee、ipc 等。
+    """
+    try:
+        return _fmt(await _client().query(
+            "research", "patent_detail", query, top_k=top_k, filters=filters,
+        ))
+    except DevnorsDataError as e:
+        return _err(e)
+
+
+@mcp.tool()
+async def research_journal_detail(
+    query: str,
+    top_k: int = 1,
+    filters: dict | None = None,
+) -> dict[str, Any]:
+    """期刊/会议详情（query 或 filters.id 为期刊 ID，来自 research_journal_search）。
+
+    - 返回 hits[]：id、name、name_en、name_zh、issn、aliases、venue_type。
+    """
+    try:
+        return _fmt(await _client().query(
+            "research", "journal_detail", query, top_k=top_k, filters=filters,
+        ))
+    except DevnorsDataError as e:
+        return _err(e)
+
+
+@mcp.tool()
+async def research_scholar_search(
+    query: str = "",
+    top_k: int = 5,
+    filters: dict | None = None,
+) -> dict[str, Any]:
+    """学者搜索（按姓名/机构；也可 filters.name / org / org_id；单次最多 10 条）。
+
+    - 返回 hits[]：id、name、name_zh、org、org_zh、interests、n_citation。
+    """
+    try:
+        return _fmt(await _client().query(
+            "research", "scholar_search", query, top_k=top_k, filters=filters,
+        ))
+    except DevnorsDataError as e:
+        return _err(e)
+
+
+@mcp.tool()
+async def research_scholar_detail(
+    query: str,
+    top_k: int = 1,
+    filters: dict | None = None,
+) -> dict[str, Any]:
+    """学者详情（query 或 filters.id 为学者 ID，来自 research_scholar_search）。
+
+    - 返回 hits[]：id、name、bio、edu、orgs、position 等。
+    """
+    try:
+        return _fmt(await _client().query(
+            "research", "scholar_detail", query, top_k=top_k, filters=filters,
+        ))
+    except DevnorsDataError as e:
+        return _err(e)
+
+
+@mcp.tool()
 async def data_query(domain: str, type: str, query: str = "", top_k: int = 5,
                      filters: dict | None = None) -> dict[str, Any]:
     """统一数据查询网关（一个 Key 调所有数据）。
 
     - domain + type 组合（已上线 live）：
-      legal/*、content/*、enterprise/company_detail、enterprise/annual_report、
-      enterprise/tax_invoice、enterprise/shixin_check、enterprise/zhixing_check、
-      cloud/express、cloud/express_com；规划中：research。
+      legal/*、content/*、enterprise/*、cloud/*、
+      research/paper_search|patent_search|journal_search|
+      paper_detail|patent_detail|journal_detail|
+      scholar_search|scholar_detail。
     - query：自然语言检索词；top_k 1-200(默认 5)；filters：按能力的结构化过滤（含 offset 翻页）。
     - 未知 domain/type→code=invalid_capability；planned 域→code=not_implemented(见 list_capabilities)。
     - 完整 domain/type/filters/字段/示例的机器可读真源：用 list_capabilities 运行时自发现。
