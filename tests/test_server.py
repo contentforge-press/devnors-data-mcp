@@ -92,14 +92,25 @@ def test_content_keyword_index_delegates(monkeypatch):
     assert fake.calls == [("content", "keyword_index", "劳动仲裁", 3, None)]
 
 
-def test_content_keyword_expand_passes_mode(monkeypatch):
+def test_content_suggest_list_passes_platform(monkeypatch):
     fake = _use(monkeypatch, FakeClient())
-    asyncio.run(s.content_keyword_expand(
-        "劳动仲裁", filters={"mode": "suggest", "platform": "baidu"},
+    asyncio.run(s.content_suggest_list(
+        "劳动仲裁", filters={"platform": "baidu"},
     ))
     assert fake.calls == [(
-        "content", "keyword_expand", "劳动仲裁", 5,
-        {"mode": "suggest", "platform": "baidu"},
+        "content", "suggest_list", "劳动仲裁", 5,
+        {"platform": "baidu"},
+    )]
+
+
+def test_content_keyword_word_passes_filters(monkeypatch):
+    fake = _use(monkeypatch, FakeClient())
+    asyncio.run(s.content_keyword_word(
+        "劳动仲裁", top_k=100, filters={"offset": 0, "sort_fields": 4},
+    ))
+    assert fake.calls == [(
+        "content", "keyword_word", "劳动仲裁", 100,
+        {"offset": 0, "sort_fields": 4},
     )]
 
 
@@ -119,16 +130,16 @@ def test_research_paper_search_delegates(monkeypatch):
 
 def test_research_patent_search_passes_filters(monkeypatch):
     fake = _use(monkeypatch, FakeClient())
-    asyncio.run(s.research_patent_search("Si02", filters={"page": 0, "size": 10}))
+    asyncio.run(s.research_patent_search("Si02", filters={"offset": 0}))
     assert fake.calls == [
-        ("research", "patent_search", "Si02", 5, {"page": 0, "size": 10})
+        ("research", "patent_search", "Si02", 20, {"offset": 0})
     ]
 
 
 def test_research_journal_search_delegates(monkeypatch):
     fake = _use(monkeypatch, FakeClient())
     asyncio.run(s.research_journal_search("tkde"))
-    assert fake.calls == [("research", "journal_search", "tkde", 5, None)]
+    assert fake.calls == [("research", "journal_search", "tkde", 10, None)]
 
 
 def test_research_paper_detail_delegates(monkeypatch):

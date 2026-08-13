@@ -150,17 +150,48 @@ error codes.
 | `list_capabilities` | Discover live domain/type, filters, fields, examples, errors |
 | `legal_case_search` | Legal judgment documents |
 | `legal_law_search` | Current law articles |
-| `content_keyword_index` | Keyword traffic index |
-| `content_keyword_expand` | Keyword expansion |
-| `content_wechat_index` | WeChat Index |
+| `content_keyword_index` | Keyword traffic index (incl. SEM) |
+| `content_suggest_list` | Suggest / autocomplete keywords (multi-platform) |
+| `content_keyword_word` | Long-tail keyword mining |
+| `content_wechat_index` | WeChat Index V1 (deprecated) |
+| `content_wechat_index_v2` | WeChat Index v2 (time series; billed per keyword) |
 | `content_hot_rank` | Weibo / Douyin hot rank |
-| `enterprise_company_detail` | Company registration details |
-| `enterprise_annual_report` | Annual reports |
-| `enterprise_tax_invoice` | Tax invoice information |
-| `enterprise_shixin_check` | Dishonest judgment debtor check |
-| `enterprise_zhixing_check` | Enforcement debtor check |
+| `enterprise_company_detail_v2` | Company registration details |
+| `enterprise_annual_report_list` | Annual report list |
+| `enterprise_annual_report_detail` | Annual report detail |
+| `enterprise_company_detail` | Company details (deprecated; use company_detail_v2) |
+| `enterprise_annual_report` | Annual report (deprecated; use annual_report_list/detail) |
+| `enterprise_tax_invoice` | Tax invoice info (deprecated; use account_open) |
+| `enterprise_account_open` | Bank account opening info |
+| `enterprise_company_tag` | Company tags |
+| `enterprise_same_legal_company` | Companies with the same legal representative |
+| `enterprise_key_person` | Key persons |
+| `enterprise_shareholder` | Shareholders |
+| `enterprise_branch_org` | Branch organizations |
+| `enterprise_industrial_commercial_change` | Industrial & commercial changes |
+| `enterprise_taxpayer_basic` | Taxpayer basic info |
+| `enterprise_tax_credit_level` | Tax credit level |
+| `enterprise_tax_illegal` | Tax illegal records |
+| `enterprise_tax_illegal_major` | Major tax illegal list |
+| `enterprise_tax_illegal_major_detail` | Major tax illegal detail |
+| `enterprise_operation_except` | Operation exception records |
+| `enterprise_admin_punishment` | Administrative punishments |
+| `enterprise_judgment_list` | Judgment document list |
+| `enterprise_court_notice_list` | Court notice list |
+| `enterprise_court_trial_list` | Court trial notice list |
+| `enterprise_cases_info_list` | Case filing info list |
+| `enterprise_termination_case_list` | Termination case list |
+| `enterprise_serious_illegal` | Serious illegal records |
+| `enterprise_exec_person` | Enforcement debtor |
+| `enterprise_breach_of_trust` | Dishonest judgment debtor |
+| `enterprise_listed_company` | Listed company info |
+| `enterprise_listed_company_neeq` | Listed company info (NEEQ) |
+| `enterprise_shixin_check` | Dishonest check (deprecated; use breach_of_trust) |
+| `enterprise_zhixing_check` | Enforcement check (deprecated; use exec_person) |
 | `cloud_express` | Express tracking |
 | `cloud_express_com` | Express company code table |
+| `cloud_web_search` | Web search |
+| `cloud_invoice_ocr` | Invoice OCR |
 | `research_paper_search` | Academic paper search |
 | `research_patent_search` | Patent search |
 | `research_journal_search` | Journal / conference search |

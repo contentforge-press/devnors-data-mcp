@@ -141,20 +141,51 @@ AI 助手可以先调用 `list_capabilities`，说明必填参数，在你提供
 
 | 工具 | 说明 |
 |---|---|
-| `list_capabilities` | 自发现：domain/type、filters、字段、示例、错误码 |
-| `legal_case_search` | 裁判文书 |
-| `legal_law_search` | 法律法规条文 |
-| `content_keyword_index` | 关键词流量指数 |
-| `content_keyword_expand` | 关键词拓词 |
-| `content_wechat_index` | 微信指数 |
+| `list_capabilities` | 自发现：拉取 `/capabilities.json`，返回可调 domain/type、filters、字段、示例、错误码 |
+| `legal_case_search` | 检索裁判文书（官方公开，出处可回溯） |
+| `legal_law_search` | 检索现行法律法规条文 |
+| `content_keyword_index` | 关键词流量指数（含 SEM） |
+| `content_suggest_list` | 下拉联想词挖掘（多平台） |
+| `content_keyword_word` | 海量长尾词挖掘 |
+| `content_wechat_index` | 微信指数 V1（已废弃） |
+| `content_wechat_index_v2` | 微信指数 v2（时间序列；按词计费） |
 | `content_hot_rank` | 微博 / 抖音热搜榜 |
-| `enterprise_company_detail` | 企业工商数据 |
-| `enterprise_annual_report` | 企业年报信息 |
-| `enterprise_tax_invoice` | 税号开票信息 |
-| `enterprise_shixin_check` | 失信核查 |
-| `enterprise_zhixing_check` | 被执行人核查 |
+| `enterprise_company_detail_v2` | 企业工商信息 |
+| `enterprise_annual_report_list` | 企业年报列表 |
+| `enterprise_annual_report_detail` | 企业年报详情 |
+| `enterprise_company_detail` | 企业工商数据（已废弃，请用 company_detail_v2） |
+| `enterprise_annual_report` | 企业年报信息（已废弃，请用 annual_report_list/detail） |
+| `enterprise_tax_invoice` | 税号开票信息（已废弃，请用 account_open） |
+| `enterprise_account_open` | 企业开户信息 |
+| `enterprise_company_tag` | 企业标签 |
+| `enterprise_same_legal_company` | 同法人企业 |
+| `enterprise_key_person` | 主要人员列表 |
+| `enterprise_shareholder` | 股东信息 |
+| `enterprise_branch_org` | 分支机构 |
+| `enterprise_industrial_commercial_change` | 工商变更 |
+| `enterprise_taxpayer_basic` | 纳税人基本信息 |
+| `enterprise_tax_credit_level` | 信用等级 |
+| `enterprise_tax_illegal` | 违法信息 |
+| `enterprise_tax_illegal_major` | 重大违法列表 |
+| `enterprise_tax_illegal_major_detail` | 重大违法详情 |
+| `enterprise_operation_except` | 经营异常信息 |
+| `enterprise_admin_punishment` | 行政处罚信息 |
+| `enterprise_judgment_list` | 裁判文书列表 |
+| `enterprise_court_notice_list` | 法院公告列表 |
+| `enterprise_court_trial_list` | 开庭公告列表 |
+| `enterprise_cases_info_list` | 立案信息列表 |
+| `enterprise_termination_case_list` | 终本案件信息列表 |
+| `enterprise_serious_illegal` | 严重违法 |
+| `enterprise_exec_person` | 被执行人 |
+| `enterprise_breach_of_trust` | 失信被执行人 |
+| `enterprise_listed_company` | 上市信息 |
+| `enterprise_listed_company_neeq` | 上市信息（新三板） |
+| `enterprise_shixin_check` | 失信核查（已废弃，请用 breach_of_trust） |
+| `enterprise_zhixing_check` | 被执行人核查（已废弃，请用 exec_person） |
 | `cloud_express` | 快递物流查询 |
 | `cloud_express_com` | 快递公司编号对照 |
+| `cloud_web_search` | 联网搜索 |
+| `cloud_invoice_ocr` | 发票 OCR 识别 |
 | `research_paper_search` | 论文搜索 |
 | `research_patent_search` | 专利搜索 |
 | `research_journal_search` | 期刊/会议搜索 |
@@ -163,7 +194,7 @@ AI 助手可以先调用 `list_capabilities`，说明必填参数，在你提供
 | `research_journal_detail` | 期刊/会议详情 |
 | `research_scholar_search` | 学者搜索 |
 | `research_scholar_detail` | 学者详情 |
-| `data_query` | 统一入口：任意 domain + type |
+| `data_query` | 统一入口：任意 `domain` + `type` + `filters` 查询 |
 
 ## 计费与错误
 

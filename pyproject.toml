@@ -21,7 +21,7 @@ keywords = [
   "claude",
   "cursor",
 ]
-dependencies = ["mcp>=1.0.0", "devnors-data>=0.1.0"]
+dependencies = ["mcp>=1.0.0", "devnors-data>=0.1.2"]
 
 [project.scripts]
 devnors-mcp = "devnors_mcp.server:main"
