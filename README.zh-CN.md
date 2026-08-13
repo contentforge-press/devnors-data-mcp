@@ -147,15 +147,11 @@ AI 助手可以先调用 `list_capabilities`，说明必填参数，在你提供
 | `content_keyword_index` | 关键词流量指数（含 SEM） |
 | `content_suggest_list` | 下拉联想词挖掘（多平台） |
 | `content_keyword_word` | 海量长尾词挖掘 |
-| `content_wechat_index` | 微信指数 V1（已废弃） |
 | `content_wechat_index_v2` | 微信指数 v2（时间序列；按词计费） |
 | `content_hot_rank` | 微博 / 抖音热搜榜 |
 | `enterprise_company_detail_v2` | 企业工商信息 |
 | `enterprise_annual_report_list` | 企业年报列表 |
 | `enterprise_annual_report_detail` | 企业年报详情 |
-| `enterprise_company_detail` | 企业工商数据（已废弃，请用 company_detail_v2） |
-| `enterprise_annual_report` | 企业年报信息（已废弃，请用 annual_report_list/detail） |
-| `enterprise_tax_invoice` | 税号开票信息（已废弃，请用 account_open） |
 | `enterprise_account_open` | 企业开户信息 |
 | `enterprise_company_tag` | 企业标签 |
 | `enterprise_same_legal_company` | 同法人企业 |
@@ -180,8 +176,6 @@ AI 助手可以先调用 `list_capabilities`，说明必填参数，在你提供
 | `enterprise_breach_of_trust` | 失信被执行人 |
 | `enterprise_listed_company` | 上市信息 |
 | `enterprise_listed_company_neeq` | 上市信息（新三板） |
-| `enterprise_shixin_check` | 失信核查（已废弃，请用 breach_of_trust） |
-| `enterprise_zhixing_check` | 被执行人核查（已废弃，请用 exec_person） |
 | `cloud_express` | 快递物流查询 |
 | `cloud_express_com` | 快递公司编号对照 |
 | `cloud_web_search` | 联网搜索 |

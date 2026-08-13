@@ -190,10 +190,17 @@ def _mock_async_client(monkeypatch, handler):
 
 
 def test_list_capabilities_success(monkeypatch):
-    payload = {"service": "Devnors", "capabilities": [{"domain": "legal", "type": "case"}]}
+    payload = {
+        "service": "Devnors",
+        "capabilities": [
+            {"domain": "legal", "type": "case", "status": "live"},
+            {"domain": "enterprise", "type": "company_detail", "status": "deprecated"},
+        ],
+    }
     _mock_async_client(monkeypatch, lambda req: httpx.Response(200, json=payload))
     out = asyncio.run(s.list_capabilities())
-    assert out["service"] == "Devnors" and out["capabilities"][0]["domain"] == "legal"
+    assert out["service"] == "Devnors"
+    assert out["capabilities"] == [{"domain": "legal", "type": "case", "status": "live"}]
 
 
 def test_list_capabilities_failure(monkeypatch):

@@ -138,20 +138,6 @@ async def content_keyword_word(query: str, top_k: int = 100,
         return _err(e)
 
 
-@mcp.tool()
-async def content_wechat_index(query: str, top_k: int = 5) -> dict[str, Any]:
-    """【已废弃】旧版微信指数；请改用 content_wechat_index_v2。
-
-    - query：关键词（必填）。
-    - 返回 hits[]：keyword、index(若已拍平)、raw、disclaimer。
-    """
-    try:
-        return _fmt(await _client().query(
-            "content", "wechat_index", query, top_k=top_k,
-        ))
-    except DevnorsDataError as e:
-        return _err(e)
-
 
 @mcp.tool()
 async def content_wechat_index_v2(
@@ -249,61 +235,7 @@ async def enterprise_annual_report_detail(
         return _err(e)
 
 
-@mcp.tool()
-async def enterprise_company_detail(
-    keyword: str,
-    top_k: int = 5,
-    filters: dict | None = None,
-) -> dict[str, Any]:
-    """【已废弃】企业工商数据；请改用 enterprise_company_detail_v2。"""
-    f: dict[str, Any] = dict(filters or {})
-    f["keyword"] = keyword
-    try:
-        return _fmt(await _client().query(
-            "enterprise", "company_detail", "",
-            top_k=top_k, filters=f,
-        ))
-    except DevnorsDataError as e:
-        return _err(e)
 
-
-@mcp.tool()
-async def enterprise_annual_report(
-    keyNo: str,
-    year: str | None = None,
-    top_k: int = 5,
-    filters: dict | None = None,
-) -> dict[str, Any]:
-    """【已废弃】企业年报；请改用 enterprise_annual_report_list / detail。"""
-    f: dict[str, Any] = dict(filters or {})
-    f["keyNo"] = keyNo
-    if year is not None:
-        f["year"] = year
-    try:
-        return _fmt(await _client().query(
-            "enterprise", "annual_report", "",
-            top_k=top_k, filters=f,
-        ))
-    except DevnorsDataError as e:
-        return _err(e)
-
-
-@mcp.tool()
-async def enterprise_tax_invoice(
-    keyWord: str,
-    top_k: int = 5,
-    filters: dict | None = None,
-) -> dict[str, Any]:
-    """【已废弃】税号开票信息；请改用 enterprise_account_open。"""
-    f: dict[str, Any] = dict(filters or {})
-    f["keyWord"] = keyWord
-    try:
-        return _fmt(await _client().query(
-            "enterprise", "tax_invoice", "",
-            top_k=top_k, filters=f,
-        ))
-    except DevnorsDataError as e:
-        return _err(e)
 
 
 @mcp.tool()
@@ -902,48 +834,6 @@ async def enterprise_listed_company_neeq(
         return _err(e)
 
 
-@mcp.tool()
-async def enterprise_shixin_check(
-    searchKey: str,
-    top_k: int = 5,
-    filters: dict | None = None,
-) -> dict[str, Any]:
-    """【已废弃】失信核查；请改用 enterprise_breach_of_trust。
-
-    searchKey 必填：查询关键字（如企业名称；参数名 searchKey）。
-    无失信记录时仍返回 VerifyResult=0 与空 Data。
-    """
-    f: dict[str, Any] = dict(filters or {})
-    f["searchKey"] = searchKey
-    try:
-        return _fmt(await _client().query(
-            "enterprise", "shixin_check", "",
-            top_k=top_k, filters=f,
-        ))
-    except DevnorsDataError as e:
-        return _err(e)
-
-
-@mcp.tool()
-async def enterprise_zhixing_check(
-    searchKey: str,
-    top_k: int = 5,
-    filters: dict | None = None,
-) -> dict[str, Any]:
-    """【已废弃】被执行人核查；请改用 enterprise_exec_person。
-
-    searchKey 必填：查询关键字（如企业名称；参数名 searchKey）。
-    无被执行记录时仍返回 VerifyResult=0 与空 Data。
-    """
-    f: dict[str, Any] = dict(filters or {})
-    f["searchKey"] = searchKey
-    try:
-        return _fmt(await _client().query(
-            "enterprise", "zhixing_check", "",
-            top_k=top_k, filters=f,
-        ))
-    except DevnorsDataError as e:
-        return _err(e)
 
 
 @mcp.tool()
@@ -1220,13 +1110,24 @@ async def data_query(domain: str, type: str, query: str = "", top_k: int = 5,
 async def list_capabilities() -> dict[str, Any]:
     """自发现：拉取服务端 /capabilities.json，返回可调的 domain/type、filters、字段、示例、
     错误码、鉴权与计费口径。Agent 应先调本工具了解「能调什么、怎么调、出错怎么办」，
-    再决定后续调用（能力表单一真源在服务端，不在本 MCP 里硬抄）。"""
+    再决定后续调用（能力表单一真源在服务端，不在本 MCP 里硬抄）。
+
+    仅返回 status=live 的能力（废弃接口不出现在 MCP 发现结果中）。
+    """
     url = f"{_base_url()}/capabilities.json"
     try:
         async with httpx.AsyncClient(timeout=15.0) as c:
             r = await c.get(url)
             r.raise_for_status()
-            return r.json()
+            payload = r.json()
+        caps = payload.get("capabilities")
+        if isinstance(caps, list):
+            payload["capabilities"] = [
+                item for item in caps
+                if not isinstance(item, dict)
+                or str(item.get("status") or "").strip().lower() == "live"
+            ]
+        return payload
     except Exception as e:  # noqa: BLE001
         return {"error": f"拉取能力清单失败: {e}", "url": url}
 

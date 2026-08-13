@@ -153,15 +153,11 @@ error codes.
 | `content_keyword_index` | Keyword traffic index (incl. SEM) |
 | `content_suggest_list` | Suggest / autocomplete keywords (multi-platform) |
 | `content_keyword_word` | Long-tail keyword mining |
-| `content_wechat_index` | WeChat Index V1 (deprecated) |
 | `content_wechat_index_v2` | WeChat Index v2 (time series; billed per keyword) |
 | `content_hot_rank` | Weibo / Douyin hot rank |
 | `enterprise_company_detail_v2` | Company registration details |
 | `enterprise_annual_report_list` | Annual report list |
 | `enterprise_annual_report_detail` | Annual report detail |
-| `enterprise_company_detail` | Company details (deprecated; use company_detail_v2) |
-| `enterprise_annual_report` | Annual report (deprecated; use annual_report_list/detail) |
-| `enterprise_tax_invoice` | Tax invoice info (deprecated; use account_open) |
 | `enterprise_account_open` | Bank account opening info |
 | `enterprise_company_tag` | Company tags |
 | `enterprise_same_legal_company` | Companies with the same legal representative |
@@ -186,8 +182,6 @@ error codes.
 | `enterprise_breach_of_trust` | Dishonest judgment debtor |
 | `enterprise_listed_company` | Listed company info |
 | `enterprise_listed_company_neeq` | Listed company info (NEEQ) |
-| `enterprise_shixin_check` | Dishonest check (deprecated; use breach_of_trust) |
-| `enterprise_zhixing_check` | Enforcement check (deprecated; use exec_person) |
 | `cloud_express` | Express tracking |
 | `cloud_express_com` | Express company code table |
 | `cloud_web_search` | Web search |
