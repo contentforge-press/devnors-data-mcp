@@ -61,8 +61,21 @@ def test_err_surfaces_structured_fields():
     e = DevnorsDataError("余额不足", status=402, code="insufficient_balance",
                          request_id="rid", retryable=False, next_action="去充值")
     out = s._err(e)
-    assert out == {"error": "余额不足", "code": "insufficient_balance",
-                   "retryable": False, "next_action": "去充值", "request_id": "rid"}
+    assert out["code"] == "insufficient_balance"
+    assert out["retryable"] is False
+    assert out["request_id"] == "rid"
+    assert out["recharge_url"].endswith("/console/recharge")
+    assert "续费" in out["next_action"]
+    assert out["recharge_url"] in out["next_action"]
+    assert out["recharge_url"] in out["error"]
+
+
+def test_err_non_balance_unchanged():
+    e = DevnorsDataError("限流", status=429, code="rate_limited",
+                         request_id="rid", retryable=True, next_action="退避")
+    out = s._err(e)
+    assert out == {"error": "限流", "code": "rate_limited",
+                   "retryable": True, "next_action": "退避", "request_id": "rid"}
 
 
 def test_base_url_env_override(monkeypatch):

@@ -204,7 +204,7 @@ fields so the agent can self-correct:
 | `code` | Meaning | `retryable` |
 |---|---|---|
 | `unauthorized` | Missing / invalid key | no |
-| `insufficient_balance` | Need top-up | no |
+| `insufficient_balance` | Need top-up at https://data.devnors.com/console/recharge | no |
 | `rate_limited` | Rate limited | yes |
 | `invalid_capability` | Bad domain/type | no |
 | `not_implemented` | Planned capability | no |

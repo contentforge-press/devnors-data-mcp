@@ -197,7 +197,7 @@ AI 助手可以先调用 `list_capabilities`，说明必填参数，在你提供
 | `code` | 含义 | `retryable` |
 |---|---|---|
 | `unauthorized` | Key 无效 / 缺失 | 否 |
-| `insufficient_balance` | 余额不足 | 否 |
+| `insufficient_balance` | 余额不足，请前往 https://data.devnors.com/console/recharge 续费 | 否 |
 | `rate_limited` | 触发限流 | 是 |
 | `invalid_capability` | domain/type 无效 | 否 |
 | `not_implemented` | 能力规划中 | 否 |

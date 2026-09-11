@@ -47,13 +47,21 @@ def _fmt(res: dict) -> dict[str, Any]:
 
 def _err(e: DevnorsDataError) -> dict[str, Any]:
     """结构化错误：透出 code/retryable/next_action/request_id，让 Agent 自纠而非死循环。"""
-    return {
+    out: dict[str, Any] = {
         "error": str(e),
         "code": e.code,
         "retryable": getattr(e, "retryable", False),
         "next_action": getattr(e, "next_action", ""),
         "request_id": getattr(e, "request_id", ""),
     }
+    if e.code == "insufficient_balance":
+        url = f"{_base_url()}/console/recharge"
+        out["recharge_url"] = url
+        out["next_action"] = f"余额不足，请前往续费：{url}（续费后可重试）"
+        text = out["error"] or "余额不足"
+        if url not in text:
+            out["error"] = f"{text.rstrip('。.')}。请续费：{url}"
+    return out
 
 
 @mcp.tool()
