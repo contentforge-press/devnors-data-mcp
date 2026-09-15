@@ -111,7 +111,7 @@ DEVNORS_DATA_BASE_URL=https://data.devnors.com
 ```
 
 ```text
-看看今天抖音热搜。
+查「律师」在百度的下拉联想词。
 ```
 
 ```text
@@ -147,8 +147,8 @@ AI 助手可以先调用 `list_capabilities`，说明必填参数，在你提供
 | `content_keyword_index` | 关键词流量指数（含 SEM） |
 | `content_suggest_list` | 下拉联想词挖掘（多平台） |
 | `content_keyword_word` | 海量长尾词挖掘 |
+| `content_bidword` | 网站竞价词挖掘 |
 | `content_wechat_index_v2` | 微信指数 v2（时间序列；按词计费） |
-| `content_hot_rank` | 微博 / 抖音热搜榜 |
 | `enterprise_company_detail_v2` | 企业工商信息 |
 | `enterprise_annual_report_list` | 企业年报列表 |
 | `enterprise_annual_report_detail` | 企业年报详情 |

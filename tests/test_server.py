@@ -65,7 +65,7 @@ def test_err_surfaces_structured_fields():
     assert out["retryable"] is False
     assert out["request_id"] == "rid"
     assert out["recharge_url"].endswith("/console/recharge")
-    assert "续费" in out["next_action"]
+    assert "充值" in out["next_action"]
     assert out["recharge_url"] in out["next_action"]
     assert out["recharge_url"] in out["error"]
 
@@ -127,10 +127,19 @@ def test_content_keyword_word_passes_filters(monkeypatch):
     )]
 
 
-def test_content_hot_rank_injects_platform(monkeypatch):
+def test_content_bidword_passes_filters(monkeypatch):
     fake = _use(monkeypatch, FakeClient())
-    asyncio.run(s.content_hot_rank(platform="douyin", top_k=10))
-    assert fake.calls == [("content", "hot_rank", "", 10, {"platform": "douyin"})]
+    asyncio.run(s.content_bidword(
+        "jd.com", top_k=20, filters={"offset": 0, "isc": 0},
+    ))
+    assert fake.calls == [(
+        "content", "bidword", "jd.com", 20,
+        {"offset": 0, "isc": 0},
+    )]
+
+
+def test_no_content_hot_rank_tool():
+    assert not hasattr(s, "content_hot_rank")
 
 
 def test_research_paper_search_delegates(monkeypatch):

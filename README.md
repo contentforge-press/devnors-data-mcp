@@ -116,7 +116,7 @@ Check whether this company is on the dishonest judgment debtor list.
 ```
 
 ```text
-Show today's Douyin hot rank.
+Suggest related keywords for "lawyer" on Baidu.
 ```
 
 ```text
@@ -153,8 +153,8 @@ error codes.
 | `content_keyword_index` | Keyword traffic index (incl. SEM) |
 | `content_suggest_list` | Suggest / autocomplete keywords (multi-platform) |
 | `content_keyword_word` | Long-tail keyword mining |
+| `content_bidword` | Website bidword mining |
 | `content_wechat_index_v2` | WeChat Index v2 (time series; billed per keyword) |
-| `content_hot_rank` | Weibo / Douyin hot rank |
 | `enterprise_company_detail_v2` | Company registration details |
 | `enterprise_annual_report_list` | Annual report list |
 | `enterprise_annual_report_detail` | Annual report detail |
